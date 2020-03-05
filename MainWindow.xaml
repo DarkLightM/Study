@@ -8,7 +8,7 @@
         Title="MainWindow" Height="400" Width="400">
     <Grid x:Name="gMain">
         <Button x:Name="Button" Content="+" HorizontalAlignment="Left" Margin="240,30,0,0" VerticalAlignment="Top" Width="39" RenderTransformOrigin="0.123,0.895" Height="37"/>
-        <Label x:Name="Label" Content="Result 0" HorizontalAlignment="Left" Margin="40,36,0,0" VerticalAlignment="Top" Height="37" Width="135"/>
+        <Label x:Name="Label" Content="Result 0" HorizontalAlignment="Left" Margin="35,36,0,0" VerticalAlignment="Top" Height="37" Width="135"/>
 
     </Grid>
 </Window>

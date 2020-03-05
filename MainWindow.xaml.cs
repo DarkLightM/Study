@@ -30,11 +30,13 @@ namespace Calculator
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TextBox box = new TextBox();
-            box.HorizontalAlignment = HorizontalAlignment.Left;
-            box.VerticalAlignment = VerticalAlignment.Top;
-            box.Width = 30;
-            box.Margin = new Thickness(40, offSet, 0, 0);
+            TextBox box = new TextBox
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Width = 30,
+                Margin = new Thickness(40, offSet, 0, 0)
+            };
             gMain.Children.Add(box);
             offSet += 20;
             box.TextChanged += ChangeLabel;
@@ -47,7 +49,7 @@ namespace Calculator
             {
                 if (obj is TextBox)
                 {
-                    var tb = (TextBox)obj;
+                    TextBox tb = (TextBox)obj;
                     int a = Convert.ToInt32(tb.Text);
                     result += a;
                 }
