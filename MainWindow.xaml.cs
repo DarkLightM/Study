@@ -38,20 +38,26 @@ namespace Calculator
                 Margin = new Thickness(40, offSet, 0, 0)
             };
             gMain.Children.Add(box);
+            box.Focus();
             offSet += 20;
             box.TextChanged += ChangeLabel;
         }
 
         private void ChangeLabel(object sender, object args)
         {
-            int result = 0;
+            double result = 0;
             foreach (object obj in gMain.Children)
             {
-                if (obj is TextBox)
+                if (obj is TextBox tb)
                 {
-                    TextBox tb = (TextBox)obj;
-                    int a = Convert.ToInt32(tb.Text);
-                    result += a;
+                    bool isInt = Double.TryParse(tb.Text, out double a);
+                    if (isInt)
+                    {
+                        a = Convert.ToDouble(tb.Text);
+                        result += a;
+                        errorLabel.Content = "";
+                    }
+                    else errorLabel.Content = "Введите число";
                 }
             }
             Label.Content = "Result " + result;
