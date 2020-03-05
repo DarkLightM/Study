@@ -27,22 +27,31 @@ namespace Calculator
         }
 
         public int offSet = 100;
-        public int result = 0;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             TextBox box = new TextBox();
             box.HorizontalAlignment = HorizontalAlignment.Left;
             box.VerticalAlignment = VerticalAlignment.Top;
+            box.Width = 30;
             box.Margin = new Thickness(40, offSet, 0, 0);
             gMain.Children.Add(box);
             offSet += 20;
-            result += 10;
-            ChangeLabel();
+            box.TextChanged += ChangeLabel;
         }
 
-        private void ChangeLabel()
+        private void ChangeLabel(object sender, object args)
         {
+            int result = 0;
+            foreach (object obj in gMain.Children)
+            {
+                if (obj is TextBox)
+                {
+                    var tb = (TextBox)obj;
+                    int a = Convert.ToInt32(tb.Text);
+                    result += a;
+                }
+            }
             Label.Content = "Result " + result;
         }
     }
