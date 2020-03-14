@@ -7,9 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="400">
     <Grid x:Name="gMain">
-        <Button x:Name="Button" Content="+" HorizontalAlignment="Left" Margin="240,30,0,0" VerticalAlignment="Top" Width="39" RenderTransformOrigin="0.123,0.895" Height="37" IsDefault="True" />
-        <Label x:Name="Label" Content="Result 0" HorizontalAlignment="Left" Margin="35,36,0,0" VerticalAlignment="Top" Height="37" Width="135"/>
-        <Label x:Name="errorLabel" Content="" HorizontalAlignment="Left" Margin="240,105,0,0" VerticalAlignment="Top" Width="128"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Button x:Name="Button" Content="+" DockPanel.Dock="Right" Width="40" Height="40"/>
+            <Button x:Name="deleteButton" Content="Del" DockPanel.Dock="Left" HorizontalAlignment="Right" Width="40" Height="40"/>
+            <Label x:Name="Label" Content="Result 0" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
+            <Label x:Name="errorLabel" Content="" DockPanel.Dock="Bottom" VerticalAlignment="Bottom"/>
+        </DockPanel>
+        <StackPanel x:Name="sMain" Grid.Row="1"></StackPanel>
     </Grid>
 </Window>

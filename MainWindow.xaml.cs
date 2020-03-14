@@ -24,29 +24,24 @@ namespace Calculator
         {
             InitializeComponent();
             Button.Click += Button_Click;
+            deleteButton.Click += DeleteButton_Click;
         }
 
         public int offSet = 100;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TextBox box = new TextBox
-            {
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                Width = 30,
-                Margin = new Thickness(40, offSet, 0, 0)
-            };
-            gMain.Children.Add(box);
+            TextBox box = new TextBox();
+            sMain.Children.Add(box);
             box.Focus();
             offSet += 20;
             box.TextChanged += ChangeLabel;
         }
-
+        
         private void ChangeLabel(object sender, object args)
         {
             double result = 0;
-            foreach (object obj in gMain.Children)
+            foreach (object obj in sMain.Children)
             {
                 if (obj is TextBox tb)
                 {
@@ -61,6 +56,12 @@ namespace Calculator
                 }
             }
             Label.Content = "Result " + result;
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            sMain.Children.RemoveAt(sMain.Children.Count-1);
+            ChangeLabel(sender, e);
         }
     }
 }
