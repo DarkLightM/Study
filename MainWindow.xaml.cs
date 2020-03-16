@@ -15,53 +15,126 @@ using System.Windows.Shapes;
 
 namespace Calculator
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        
+        public int namer = 0;
+        public Dictionary<TextBox, ComboBox> Pair = new Dictionary<TextBox, ComboBox>();
+
         public MainWindow()
         {
             InitializeComponent();
             Button.Click += Button_Click;
-            deleteButton.Click += DeleteButton_Click;
         }
-
-        public int offSet = 100;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TextBox box = new TextBox();
-            sMain.Children.Add(box);
+            TextBox box = new TextBox()
+            {
+                Width = 30,
+                Margin = new Thickness(5, 0, 5, 0),
+            };
+            ComboBox operations = MakeComboBox(new string[] { "+", "-", "*", "/" });
+            Pair.Add(box, operations);
+            StackPanel sPanel = new StackPanel()
+            {
+                Name = "sPanel" + namer,
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            };
+            Button button = new Button()
+            {
+                Name = "button" + namer,
+                Content = "удалить",
+            };
+            namer++;
+            sPanel.Children.Add(operations);
+            sPanel.Children.Add(box);
+            sPanel.Children.Add(button);
+            sMain.Children.Add(sPanel);
             box.Focus();
-            offSet += 20;
+            operations.SelectionChanged += ChangeLabel;
             box.TextChanged += ChangeLabel;
+            button.Click += DeleteButton_Click;
         }
-        
+
         private void ChangeLabel(object sender, object args)
         {
             double result = 0;
             foreach (object obj in sMain.Children)
             {
-                if (obj is TextBox tb)
-                {
-                    bool isInt = Double.TryParse(tb.Text, out double a);
-                    if (isInt)
+                if (obj is StackPanel sp)
+                    foreach (object obj2 in sp.Children)
                     {
-                        a = Convert.ToDouble(tb.Text);
-                        result += a;
-                        errorLabel.Content = "";
+                        if (obj2 is TextBox tb)
+                        {
+                            bool isInt = double.TryParse(tb.Text, out double a);
+                            if (isInt)
+                            {
+                                ComboBox cBox = Pair[tb];
+                                a = Convert.ToDouble(tb.Text);
+                                result = Count(result, a, cBox.Text);
+                                errorLabel.Content = "";
+                            }
+                            else errorLabel.Content = "Введите число";
+                        }
                     }
-                    else errorLabel.Content = "Введите число";
-                }
             }
             Label.Content = "Result " + result;
         }
 
+        private double Count (double result, double a, string op)
+        {
+            switch (op)
+            {
+                case "+":
+                    result += a;
+                    break;
+                case "-":
+                    result -= a;
+                    break;
+                case "*":
+                    result *= a;
+                    break;
+                case "/":
+                    result /= a;
+                    break;
+            }
+            return result;
+        }
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            sMain.Children.RemoveAt(sMain.Children.Count-1);
+            Button dButton = (Button)sender;
+            string buttonName = dButton.Name.Substring(6);
+            foreach (object obj in sMain.Children)
+            {
+                if (obj is StackPanel sp)
+                {
+                    if (sp.Name.Substring(6).Equals(buttonName))
+                    {
+                        sMain.Children.Remove(sp);
+                        break;
+                    }
+                }
+            }
             ChangeLabel(sender, e);
         }
+
+        private ComboBox MakeComboBox(string[] arr)
+        {
+            ComboBox box = new ComboBox();
+            foreach (string item in arr)
+            {
+                ComboBoxItem cbItem = new ComboBoxItem
+                {
+                    Content = item
+                };
+                box.Items.Add(cbItem);
+            }
+            return box;
+        }
+
+        
     }
 }

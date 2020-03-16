@@ -5,18 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="400">
+        Title="MainWindow" Height="400" Width="400" MinHeight="300" MinWidth="200">
     <Grid x:Name="gMain">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0">
-            <Button x:Name="Button" Content="+" DockPanel.Dock="Right" Width="40" Height="40"/>
-            <Button x:Name="deleteButton" Content="Del" DockPanel.Dock="Left" HorizontalAlignment="Right" Width="40" Height="40"/>
-            <Label x:Name="Label" Content="Result 0" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
+            <Button x:Name="Button" Content="=" DockPanel.Dock="Top" Width="40" Height="40"/>
+            <Label x:Name="Label" Content="Result 0" DockPanel.Dock="Left"/>
             <Label x:Name="errorLabel" Content="" DockPanel.Dock="Bottom" VerticalAlignment="Bottom"/>
         </DockPanel>
-        <StackPanel x:Name="sMain" Grid.Row="1"></StackPanel>
+        <StackPanel x:Name="sMain" Grid.Row="1" />
     </Grid>
 </Window>
